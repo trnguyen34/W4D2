@@ -20,9 +20,8 @@ class Manager < Employee
     def sum_salary
         sum_salary = 0
         employees.each do |employee|
-            if !employee.is_a?(Manager)
-                sum_salary += employee.salary
-            else
+            sum_salary += employee.salary
+            if employee.is_a?(Manager)
                 sum_salary += employee.sum_salary
             end
         end
@@ -41,3 +40,5 @@ employee1.add_employee(employee2)
 employee1.add_employee(employee3)
 
 p big_boss.bonus(3)
+p employee1.bonus(4)
+p employee3.bonus(3)
