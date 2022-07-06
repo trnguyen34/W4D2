@@ -4,6 +4,9 @@ class Piece
     @color = color
     @board = board
     @pos = pos
+    @enemy = enemy_color
+
+
    end   
     
     def to_s
@@ -27,8 +30,20 @@ class Piece
 
     end
 
-    attr_reader :color, :board
+
+
+    attr_reader :color, :board, :enemy
     attr_accessor :pos
+
+
+    # private
+
+    def enemy_color
+        return nil if color == nil
+
+        color == :W ? :B : :W
+
+    end
 end
 
 class King < Piece
@@ -91,15 +106,53 @@ class Knight < Piece
     end
 end
 
-class Pawn < Piece
+class Pawn < Piece # For us, white starts at 1 and moves up in index and black starts at 6 and moves down in index
     def initialize(color, board, pos)
         super
         @symbol = color == :W ? "\u2659" : "\u265F"
+        @startrow = color == :W ? 1 : 6
+        # if(color == :W)
+        #     @startrow = 1
+        # else
+        #     @startrow = 6
+        # end
+
+        forward_dir
     end
 
-    def moves
+
+    def moves # returns an array of places a piece can move to
+        
 
     end
 
+  private
+    def at_start_row?
+    # startrow is 1 if it is white, and 6 if it is black
+        pos[0] == startrow
+
+
+    end
+
+    def forward_dir
+        @forward = color == :W ? 1 : -1
+    end
+
+    def forward_steps
+
+    end
+
+    def side_attacks
+
+        moves = []
+
+        attack1 = [pos[0] + forward, pos[1] + 1]
+        attack2 = [pos[0] + forward, pos[1] - 1]
+
+        board[[pos[0] + forward]
+        
+    end
+
+    attr_reader :startrow, :forward
     
 end

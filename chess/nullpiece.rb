@@ -13,6 +13,7 @@ class NullPiece < Piece
     end
 
     def moves
+       return []
         
     end
 end
