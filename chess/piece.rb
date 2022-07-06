@@ -31,6 +31,11 @@ class Piece
     end
 
 
+    def addpos(pos1, pos2)
+    [pos1[0] + pos2[0], pos1[1] + pos2[1]]
+    end
+
+
 
     attr_reader :color, :board, :enemy
     attr_accessor :pos
