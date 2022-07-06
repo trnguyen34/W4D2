@@ -7,14 +7,18 @@ class Display
     end
 
     def render
+        system("clear")
         (0..7).each do |i|
-            p (0..7).map {|j| @board[[i, j]].to_s}.join(' ')
+            puts (0..7).map { |j| [i, j] != @cursor.cursor_pos ? @board[[i, j]].to_s : @board[[i, j]].to_s.blue.on_green}.join(' ')
         end    
             
     end
 
     def navigate
-    
+        while(true)
+            render
+            @cursor.get_input
+        end
     rescue SystemExit
         puts "over"
     end

@@ -1,5 +1,4 @@
 require_relative 'slideable.rb'
-require_relative 'stepable.rb'
 class Piece
    def initialize(color, board, pos)
     @color = color
@@ -51,14 +50,13 @@ class Piece
 end
 
 class King < Piece
-    include Stepable
-
+    # include Slideable
     def initialize(color, board, pos)
         super
         @symbol = color == :W ? "\u2654" : "\u265A"
     end   
 
-    #protected
+    protected
     def move_diffs
     [[-1, -1], [-1, 0], [-1, 1], [0, -1],
       [0, 1], [1, -1], [1, 0], [1, 1]]
@@ -105,20 +103,9 @@ class Bishop < Piece
 end
 
 class Knight < Piece
-    include Stepable
-
     def initialize(color, board, pos)
         super
         @symbol = color == :W ? "\u2658" : "\u265E"
-    end
-
-    def move_diffs
-        [
-         [2,1], [-2, 1], 
-         [2, -1], [-2, -1], 
-         [1, 2], [-1, 2], 
-         [1, -2], [-1, -2]
-        ]
     end
 end
 

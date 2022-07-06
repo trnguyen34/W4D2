@@ -91,6 +91,6 @@ class Cursor
 
   def update_pos(diff)
     final_position = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
-    @cursor_pos = final_position if board.on_board?(final_position)
+    @cursor_pos = final_position if Board.on_board?(final_position)
   end
 end
