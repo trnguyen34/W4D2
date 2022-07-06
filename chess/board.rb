@@ -64,6 +64,10 @@ class Board
     def add_piece(piece, pos)
         self[pos] = piece
     end
+
+    def self.on_board?(pos)
+        pos[0].between?(0,7) && pos[1].between?(0,7)
+    end
         
     private
     attr_reader :null_piece

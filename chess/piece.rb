@@ -40,9 +40,7 @@ class Piece
 
     def enemy_color
         return nil if color == nil
-
         color == :W ? :B : :W
-
     end
 end
 
@@ -120,18 +118,14 @@ class Pawn < Piece # For us, white starts at 1 and moves up in index and black s
         forward_dir
     end
 
-
     def moves # returns an array of places a piece can move to
-        
-
+        forward_steps + side_attacks
     end
 
-  private
+  #private
     def at_start_row?
     # startrow is 1 if it is white, and 6 if it is black
         pos[0] == startrow
-
-
     end
 
     def forward_dir
@@ -139,18 +133,29 @@ class Pawn < Piece # For us, white starts at 1 and moves up in index and black s
     end
 
     def forward_steps
+        moves = []
+        forward_step = [pos[0] + forward, pos[1]]
+        moveable = Board.on_board?(forward_step) && board[forward_step].empty?
+        moves << forward_step if moveable
+        double_step = [pos[0] + (forward*2), pos[1]]
+        if at_start_row? && moveable && board[double_step].empty?
+            moves << double_step
+        end
 
+        moves
     end
 
     def side_attacks
-
         moves = []
-
         attack1 = [pos[0] + forward, pos[1] + 1]
         attack2 = [pos[0] + forward, pos[1] - 1]
+        moves << attack1 if Board.on_board?(attack1) && board[attack1].color == enemy
+        moves << attack2 if Board.on_board?(attack2) && board[attack2].color == enemy
+        moves
+    end
 
-        board[[pos[0] + forward]
-        
+    def pawn_enemy 
+        enemy
     end
 
     attr_reader :startrow, :forward
