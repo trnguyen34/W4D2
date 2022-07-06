@@ -75,7 +75,7 @@ if __FILE__ == $PROGRAM_NAME
     p1 = Piece.new(:W, board1, [3,3])
     board1.add_piece(p1, p1.pos)
     puts board1[[3, 3]]
-    board1.move_piece(p1.pos, [4, 4])
+    board1.move_piece(:W, p1.pos, [4, 4])
     puts board1[[3, 3]]
     puts board1[[4, 4]]
     

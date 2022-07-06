@@ -7,4 +7,12 @@ class NullPiece < Piece
         @symbol = " "
         super(nil, nil, [nil, nil])
     end
+
+    def empty?
+        true
+    end
+
+    def moves
+        
+    end
 end
