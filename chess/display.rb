@@ -1,7 +1,9 @@
 require_relative "board.rb"
+require_relative "cursor.rb"
 class Display
     def initialize(board)
         @board = board
+        @cursor = Cursor.new([0, 0], board)
     end
 
     def render
@@ -11,6 +13,10 @@ class Display
             
     end
 
-
+    def navigate
+    
+    rescue SystemExit
+        puts "over"
+    end
 
 end
