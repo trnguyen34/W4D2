@@ -68,8 +68,65 @@ class Board
     def self.on_board?(pos)
         pos[0].between?(0,7) && pos[1].between?(0,7)
     end
-        
+
+    
+
+    def find_king(color)
+        piece_list = generate_piece_list(color)
+        king = piece_list.find {|piece| piece.class == King}
+        king.pos
+    end
+
+    def in_check?(color)
+
+        kingpos = find_king(color)
+
+        enemy = color == :W ? :B : :W
+
+        enemy_list = generate_piece_list(enemy)
+
+        enemypawns = enemy_list.select {|enemy| enemy.class = Pawn}
+        enemyother = enemy_list.select {|enemy| enemy.class != Pawn}
+
+        enemymoves = enemyother.inject([]) {|acc, curr| acc + curr.moves}
+
+        return true if enemymoves.include?(kingpos)
+
+        return true if enemypawns.any? {|pawn| pawn.attackableposition?(kingpos)}
+
+        false
+=begin
+Find the king of requested color 
+Check all of opposing non pawn pieces and see if any of their moves is the position of the requested king.
+If true, return true
+
+Else
+Also check the opposing pawn's attack positions only (not the forward ones). If any of them lands on
+the king's position, return true
+
+Else return false
+=end
+    end
+
+    def checkmate?(color)
+=begin
+First, make sure it is in check.
+
+Iterate through all of your color's pieces' moves. Change the duplicate board to reflect each move
+If all of these boards are still in check, then return true
+    else, return false
+=end
+    end
+
     private
+
+
+    def generate_piece_list(color)
+
+        rawlist = @rows.flatten # this is all pieces including null pieces
+
+        rawlist.select {|piece| piece.color == color}
+    end
     attr_reader :null_piece
 end
 

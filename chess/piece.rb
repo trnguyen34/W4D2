@@ -1,5 +1,4 @@
 require_relative 'slideable.rb'
-require_relative 'stepable.rb'
 class Piece
    def initialize(color, board, pos)
     @color = color
@@ -42,7 +41,7 @@ class Piece
     attr_accessor :pos
 
 
-    # private
+    private
 
     def enemy_color
         return nil if color == nil
@@ -51,14 +50,13 @@ class Piece
 end
 
 class King < Piece
-    include Stepable
-
+    # include Slideable
     def initialize(color, board, pos)
         super
         @symbol = color == :W ? "\u2654" : "\u265A"
     end   
 
-    #protected
+    protected
     def move_diffs
     [[-1, -1], [-1, 0], [-1, 1], [0, -1],
       [0, 1], [1, -1], [1, 0], [1, 1]]
@@ -105,20 +103,9 @@ class Bishop < Piece
 end
 
 class Knight < Piece
-    include Stepable
-
     def initialize(color, board, pos)
         super
         @symbol = color == :W ? "\u2658" : "\u265E"
-    end
-
-    def move_diffs
-        [
-         [2,1], [-2, 1], 
-         [2, -1], [-2, -1], 
-         [1, 2], [-1, 2], 
-         [1, -2], [-1, -2]
-        ]
     end
 end
 
@@ -140,7 +127,11 @@ class Pawn < Piece # For us, white starts at 1 and moves up in index and black s
         forward_steps + side_attacks
     end
 
-  #private
+    def attackableposition?(pos)
+        side_attacks.include?(pos)
+    end
+
+  private
     def at_start_row?
     # startrow is 1 if it is white, and 6 if it is black
         pos[0] == startrow
@@ -163,7 +154,8 @@ class Pawn < Piece # For us, white starts at 1 and moves up in index and black s
         moves
     end
 
-    def side_attacks
+
+    def side_attacks # this cannot be private due to the check
         moves = []
         attack1 = [pos[0] + forward, pos[1] + 1]
         attack2 = [pos[0] + forward, pos[1] - 1]
